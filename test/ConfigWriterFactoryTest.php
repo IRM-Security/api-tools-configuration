@@ -8,6 +8,8 @@ use Laminas\Config\Writer\PhpArray;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+use function property_exists;
+
 class ConfigWriterFactoryTest extends TestCase
 {
     /**
@@ -38,7 +40,7 @@ class ConfigWriterFactoryTest extends TestCase
         $factory      = $this->factory;
         $configWriter = $factory($this->container);
 
-        $this->assertClassHasAttribute('useBracketArraySyntax', $configWriter::class);
+        $this->assertTrue(property_exists($configWriter::class, 'useBracketArraySyntax'));
         $this->assertFalse($configWriter->getUseClassNameScalars());
     }
 
@@ -54,7 +56,7 @@ class ConfigWriterFactoryTest extends TestCase
         $factory      = $this->factory;
         $configWriter = $factory($this->container);
 
-        $this->assertClassHasAttribute('useBracketArraySyntax', $configWriter::class);
+        $this->assertTrue(property_exists($configWriter::class, 'useBracketArraySyntax'));
     }
 
     public function testClassNameScalarsFlagIsSet(): void

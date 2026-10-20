@@ -9,6 +9,7 @@ use Laminas\Config\Writer\WriterInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+use function property_exists;
 use function uniqid;
 
 class ConfigResourceFactoryTest extends TestCase
@@ -65,9 +66,9 @@ class ConfigResourceFactoryTest extends TestCase
         $factory             = $this->factory;
         $configResource      = $factory($this->container);
         $configResourceClass = $configResource::class;
-        $this->assertClassHasAttribute('config', $configResourceClass);
-        $this->assertClassHasAttribute('fileName', $configResourceClass);
-        $this->assertClassHasAttribute('writer', $configResourceClass);
+        $this->assertTrue(property_exists($configResourceClass, 'config'));
+        $this->assertTrue(property_exists($configResourceClass, 'fileName'));
+        $this->assertTrue(property_exists($configResourceClass, 'writer'));
         $this->assertSame([], $configResource->fetch(false));
     }
 
@@ -90,8 +91,8 @@ class ConfigResourceFactoryTest extends TestCase
         $configResource      = $factory($this->container);
         $configResourceClass = $configResource::class;
 
-        $this->assertClassHasAttribute('config', $configResourceClass);
-        $this->assertClassHasAttribute('fileName', $configResourceClass);
+        $this->assertTrue(property_exists($configResourceClass, 'config'));
+        $this->assertTrue(property_exists($configResourceClass, 'fileName'));
         $configValues = $configResource->fetch(false);
         $this->assertSame($configValues['api-tools-configuration.config_file'], $configFile);
     }
@@ -115,7 +116,7 @@ class ConfigResourceFactoryTest extends TestCase
         $configResourceClass = $configResource::class;
 
         $expectedConfig = ['custom-configuration.foo' => 'bar'];
-        $this->assertClassHasAttribute('config', $configResourceClass);
+        $this->assertTrue(property_exists($configResourceClass, 'config'));
         $this->assertSame($expectedConfig, $configResource->fetch(false));
     }
 }
